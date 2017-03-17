@@ -9,7 +9,9 @@ www.arfedora.com
 
 #Screenshot/Video
 
-[![ScreenShot](image)](video)
+[![ScreenShot](https://raw.githubusercontent.com/yucefsourani/arfedora-osx-25/master/1.jpg)](video)
+
+[![ScreenShot](https://raw.githubusercontent.com/yucefsourani/arfedora-osx-25/master/2.jpg)](video)
 
 * To Use 
  * ``` cd && git clone https://github.com/yucefsourani/arfedora-osx-25 ```
