@@ -16,4 +16,4 @@ www.arfedora.com
 
  * ``` sudo chmod 755 ~/arfedora-osx-25/arfedora-osx.py or su -c "chmod 755 arfedora-osx-25/arfedora-osx.py" ```
 
- * ``` ~/arfedora-osx-25/arfedora-osx.py
+ * ``` ~/arfedora-osx-25/arfedora-osx.py ```
