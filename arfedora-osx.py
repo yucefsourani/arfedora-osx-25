@@ -215,7 +215,7 @@ setup_icons()
 
 def setup_backgrounds():
     os.makedirs(home+"/Pictures",exist_ok=True)
-    check = subprocess.call("curl -L -o  backgrounds/565055.jpg https://www.dropbox.com/s/1bzhty2kzl05v07/565055.jpg?dl=0",shell=True)
+    check = subprocess.call("curl -L -o  %s/backgrounds/565055.jpg https://www.dropbox.com/s/1bzhty2kzl05v07/565055.jpg?dl=0"%dirname,shell=True)
     if check != 0:
         sys.exit("\nDownload Background Picture Fail Check Your Connections.\n"%install)
     for pic in os.listdir(dirname+"/backgrounds"):
