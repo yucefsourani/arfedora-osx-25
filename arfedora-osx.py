@@ -224,17 +224,17 @@ def setup_backgrounds():
 setup_backgrounds()
 
 
-def install_terminix():
-    check = subprocess.call("rpm -q terminix",shell=True)
+def install_tilix():
+    check = subprocess.call("rpm -q tilix",shell=True)
     if check !=0:
         check = subprocess.call("sudo  dnf copr enable heikoada/terminix -y",shell=True)
         if check !=0:
-            sys.exit("\nInstall Terminix Fail Check Your Connections.\n")
-        check = subprocess.call("sudo  dnf install terminix -y --best",shell=True)
+            sys.exit("\nInstall tilix Fail Check Your Connections.\n")
+        check = subprocess.call("sudo  dnf install tilix -y --best",shell=True)
         if check != 0 :
-            sys.exit("\nInstall Terminix Fail Check Your Connections.\n")
+            sys.exit("\nInstall tilix Fail Check Your Connections.\n")
         
-install_terminix()        
+install_tilix()        
        
        
 def install_murrine_engine():
