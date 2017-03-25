@@ -3,7 +3,7 @@
 #
 #  arfedora-osx.py
 #  
-#  Copyright 2017 youcefsourani <youcef.m.sourani@gmail.com>
+#  Copyright 2017 youcefsourani <youssef.m.sourani@gmail.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ def init_check():
         sys.exit("Run Script Without Root Permissions.")
         
     if not sys.version.startswith("3"):
-        sys.exit("Use Python 3 Try run python3 fgmac-f24.py")
+        sys.exit("Use Python 3 Try run python3 arfedora-osx.py")
         
     if os.getenv("XDG_CURRENT_DESKTOP")!="GNOME" :
         sys.exit("Your Desktop Is Not gnome shell")
