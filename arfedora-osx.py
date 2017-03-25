@@ -3,7 +3,7 @@
 #
 #  arfedora-osx.py
 #  
-#  Copyright 2017 youcefsourani <youssef.m.sourani@gmail.com>
+#  Copyright 2017 youcefsourani <youcef.m.sourani@gmail.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ def init_check():
         sys.exit("Run Script Without Root Permissions.")
         
     if not sys.version.startswith("3"):
-        sys.exit("Use Python 3 Try run python3 arfedora-osx.py")
+        sys.exit("Use Python 3 Try run python3 fgmac-f24.py")
         
     if os.getenv("XDG_CURRENT_DESKTOP")!="GNOME" :
         sys.exit("Your Desktop Is Not gnome shell")
@@ -49,23 +49,36 @@ home="/home/"+os.environ["LOGNAME"]
 dirname=os.path.abspath(os.path.dirname(__file__))
 speed=1
 default_terminal_profile=eval(subprocess.check_output("gsettings get org.gnome.Terminal.ProfilesList list",shell=True).decode("utf-8").strip())[0]
-default_terminix_profile=eval(subprocess.check_output("gsettings get com.gexperts.Terminix.ProfilesList list",shell=True).decode("utf-8").strip())[0]
+
+
+def install_tilix():
+    check = subprocess.call("rpm -q tilix",shell=True)
+    if check !=0:
+        check = subprocess.call("sudo  dnf copr enable heikoada/terminix -y",shell=True)
+        if check !=0:
+            sys.exit("\nInstall Tilix Fail Check Your Connections.\n")
+        check = subprocess.call("sudo  dnf install tilix -y --best",shell=True)
+        if check != 0 :
+            sys.exit("\nInstall Tilix Fail Check Your Connections.\n")
+        
+install_tilix()
+default_tilix_profile=eval(subprocess.check_output("gsettings get com.gexperts.Tilix.ProfilesList list",shell=True).decode("utf-8").strip())[0]
 
 
 
-terminix=["gsettings set com.gexperts.Terminix.Settings quake-hide-headerbar true",
-          "gsettings set com.gexperts.Terminix.Settings quake-height-percent 40",
-          "gsettings set com.gexperts.Terminix.Settings quake-width-percent 100",
-          "gsettings set com.gexperts.Terminix.Settings theme-variant \'system\'",
-          "gsettings set com.gexperts.Terminix.Settings enable-transparency true",
-          "gsettings set com.gexperts.Terminix.Settings terminal-title-show-when-single false",
-          "dconf write  /com/gexperts/Terminix/profiles/%s/use-system-font false"%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/font \"\'Monospace 15\'\""%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/background-transparency-percent 19"%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/background-color \"\'#FFFFFFFFFFFF\'\""%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/use-theme-colors false"%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/cursor-colors-set true"%default_terminix_profile,
-          "dconf write  /com/gexperts/Terminix/profiles/%s/cursor-background-color \"\'#EFEF29292929\'\""%default_terminix_profile]
+tilix=["gsettings set com.gexperts.Tilix.Settings quake-hide-headerbar true",
+          "gsettings set com.gexperts.Tilix.Settings quake-height-percent 40",
+          "gsettings set com.gexperts.Tilix.Settings quake-width-percent 100",
+          "gsettings set com.gexperts.Tilix.Settings theme-variant \'system\'",
+          "gsettings set com.gexperts.Tilix.Settings enable-transparency true",
+          "gsettings set com.gexperts.Tilix.Settings terminal-title-show-when-single false",
+          "dconf write  /com/gexperts/Tilix/profiles/%s/use-system-font false"%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/font \"\'Monospace 15\'\""%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/background-transparency-percent 19"%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/background-color \"\'#FFFFFFFFFFFF\'\""%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/use-theme-colors false"%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/cursor-colors-set true"%default_tilix_profile,
+          "dconf write  /com/gexperts/Tilix/profiles/%s/cursor-background-color \"\'#EFEF29292929\'\""%default_tilix_profile]
 
 extensions_to_enable=["user-theme@gnome-shell-extensions.gcampax.github.com",
                       "activities-config@nls1729",
@@ -77,7 +90,7 @@ extensions_to_enable=["user-theme@gnome-shell-extensions.gcampax.github.com",
                       "EasyScreenCast@iacopodeenosee.gmail.com",
                       "gnome-shell-audio-output-switcher@kgaut",
                       "places-menu@gnome-shell-extensions.gcampax.github.com",
-                      "TerminixDropdown@ivkuzev@gmail.com",
+                      "TilixDropdown@ivkuzev@gmail.com",
                       "todo.txt@bart.libert.gmail.com",
                       "background-logo@fedorahosted.org",
                       "Move_Clock@rmy.pobox.com",
@@ -133,7 +146,7 @@ dconf=["dconf write /org/gnome/shell/extensions/activities-config/activities-con
        "dconf write /org/gnome/shell/extensions/activities-config/override-theme  false",
        "dconf write /org/gnome/shell/extensions/activities-config/panel-background-color-hex-rgb  \"\'#000000\'\"",
        "dconf write /org/gnome/shell/extensions/activities-config/panel-hide-rounded-corners  false",
-       "dconf write /org/gnome/shell/extensions/activities-config/shell-theme-id  \"\'macOS-3-1<|>\'\"",
+       "dconf write /org/gnome/shell/extensions/activities-config/shell-theme-id  \"\'macOS-3-1<|>user\'\"",
        "dconf write /org/gnome/shell/extensions/activities-config/activities-config-button-text  \"\'%s\'\""%distroname.title(),
        "dconf write /org/gnome/shell/extensions/activities-config/show-overview  false",
        "dconf write /org/gnome/shell/extensions/activities-config/first-enable  false",
@@ -215,26 +228,17 @@ setup_icons()
 
 def setup_backgrounds():
     os.makedirs(home+"/Pictures",exist_ok=True)
-    check = subprocess.call("curl -L -o  %s/backgrounds/565055.jpg https://www.dropbox.com/s/1bzhty2kzl05v07/565055.jpg?dl=0"%dirname,shell=True)
-    if check != 0:
-        sys.exit("\nDownload Background Picture Fail Check Your Connections.\n"%install)
+    if not os.path.isfile(home+"/Pictures/565055.jpg"):
+        check = subprocess.call("curl -L -o  %s/backgrounds/565055.jpg https://www.dropbox.com/s/1bzhty2kzl05v07/565055.jpg?dl=0"%dirname,shell=True)
+        if check != 0:
+            sys.exit("\nDownload Background Picture Fail Check Your Connections.\n"%install)
     for pic in os.listdir(dirname+"/backgrounds"):
         subprocess.call("cp  %s/backgrounds/%s %s"%(dirname,pic,home+"/Pictures"),shell=True)
         
 setup_backgrounds()
 
 
-def install_tilix():
-    check = subprocess.call("rpm -q tilix",shell=True)
-    if check !=0:
-        check = subprocess.call("sudo  dnf copr enable heikoada/terminix -y",shell=True)
-        if check !=0:
-            sys.exit("\nInstall tilix Fail Check Your Connections.\n")
-        check = subprocess.call("sudo  dnf install tilix -y --best",shell=True)
-        if check != 0 :
-            sys.exit("\nInstall tilix Fail Check Your Connections.\n")
-        
-install_tilix()        
+  
        
        
 def install_murrine_engine():
@@ -293,13 +297,13 @@ def run_gnome_terminal_commands():
 
 run_gnome_terminal_commands()
 
-def run_terminix_commands():
+def run_tilix_commands():
     time.sleep(speed)
-    for command in terminix:
+    for command in tilix:
         subprocess.call(command,shell=True)
         time.sleep(speed)
 
-run_terminix_commands()
+run_tilix_commands()
 
 print ("\nFinish Reboot Your System\n")
 
